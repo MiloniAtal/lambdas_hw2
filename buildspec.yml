@@ -1,15 +1,15 @@
 version: 0.2
 phases:
- install:
-  runtime-versions:
-   python: 3.7
- build: 
-  commands:
-   - sam build
-   - export BUCKET=test-pipeline-output-bucket
-   - sam package --s3-bucket lambdas-hw2 --output-template-file outputtemplate.yml
+  install:
+    runtime-versions:
+    python: 3.7
+  build: 
+    commands:
+    - sam build
+    - export BUCKET=test-pipeline-output-bucket
+    - sam package --s3-bucket lambdas-hw2 --output-template-file outputtemplate.yml
 artifacts:
- type: zip
- files:
-  - template.yml
-  - outputtemplate.yml
+  type: zip
+  files:
+    - template.yml
+    - outputtemplate.yml
