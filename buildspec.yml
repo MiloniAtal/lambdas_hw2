@@ -5,7 +5,8 @@ phases:
       python: 3.10
   build: 
     commands:
-      - aws cloudformation package --template-file template.yml --s3-bucket lambdas-hw2 --output-template-file outputtemplate.yml
+      - sam build
+      - sam package --template-file template.yml --s3-bucket lambdas-hw2 --output-template-file outputtemplate.yml
 artifacts:
   type: zip
   files:
