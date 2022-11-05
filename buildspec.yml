@@ -5,7 +5,7 @@ phases:
       python: 3.10
   build: 
     commands:
-      - aws cloudformation package --template-file template.yml --s3-bucket lambdas-hw2 --output-template-file outputtemplate.yml --capabilities CAPABILITY_AUTO_EXPAND
+      - aws cloudformation package --template-file template.yml --s3-bucket lambdas-hw2 --output-template-file outputtemplate.yml --capabilities CAPABILITY_NAMED_IAM
 artifacts:
   type: zip
   files:
