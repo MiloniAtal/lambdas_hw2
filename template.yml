@@ -6,6 +6,6 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: Index.lambda_handler
-      Runtime: python3.9
+      Runtime: python
       FunctionName: Trial
       CodeUri: ./src #Directory the source file is
