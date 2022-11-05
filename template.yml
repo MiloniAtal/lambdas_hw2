@@ -7,5 +7,5 @@ Resources:
     Properties:
       Handler: Index.lambda_handler
       Runtime: python3.8
-      FunctionName: Trial
+      FunctionName: HW2-LF2-Cloud
       CodeUri: ./src #Directory the source file is
