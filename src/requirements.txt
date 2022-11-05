@@ -2,4 +2,3 @@ requests
 requests_aws4auth
 boto3
 random
-logging
