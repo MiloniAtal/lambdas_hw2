@@ -1,9 +1,12 @@
 version: 0.2
 phases:
+  install:
+    runtime-versions:
+      python: 3.10
   build: 
     commands:
       - sam build
-      - sam package --template-file template.yml --s3-bucket lambdas-hw2 --output-template-file outputtemplate.yml
+      - sam package --template-file template.yml --s3-bucket lambdas-hw2 --output-template-file outputtemplate.yml --use-container
 artifacts:
   type: zip
   files:
