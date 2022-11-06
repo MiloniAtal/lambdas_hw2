@@ -10,6 +10,12 @@ Resources:
       FunctionName: HW2-LF2-Cloud
       CodeUri: ./src #Directory the source file is
       Role: arn:aws:iam::788578785318:role/service-role/HW2-LF2-role-8vyfqqu1
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: https://iav31pdv15.execute-api.us-east-1.amazonaws.com/beta/search
+            Method: get
   LambdaFunctionOne:
     Type: AWS::Serverless::Function
     Properties:
@@ -18,10 +24,10 @@ Resources:
       FunctionName: HW2-LF1-Cloud
       CodeUri: ./src #Directory the source file is
       Role: arn:aws:iam::788578785318:role/service-role/HW2-LF2-role-8vyfqqu1
-      Events:
-        S3Event:
-          Type: S3
-          Properties:
-            Bucket: b2-hw2-my2727-ma4338    # This must be the name of an S3 bucket declared in the same template file
-            Events: s3:ObjectCreated:Put
+      # Events:
+      #   S3Event:
+      #     Type: S3
+      #     Properties:
+      #       Bucket: b2-hw2-my2727-ma4338    # This must be the name of an S3 bucket declared in the same template file
+      #       Events: s3:ObjectCreated:Put
           
