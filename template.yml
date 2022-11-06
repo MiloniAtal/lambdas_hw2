@@ -9,3 +9,4 @@ Resources:
       Runtime: python3.8
       FunctionName: HW2-LF2-Cloud
       CodeUri: ./src #Directory the source file is
+      Role: arn:aws:iam::788578785318:role/service-role/HW2-LF2-role-8vyfqqu1
