@@ -2,11 +2,19 @@ AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: Python file including external library changed again
 Resources:
-  SampleFunction:
+  LambdaFunctionTwo:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: Index.lambda_handler
+      Handler: lambdaTwo.lambda_handler
       Runtime: python3.8
       FunctionName: HW2-LF2-Cloud
+      CodeUri: ./src #Directory the source file is
+      Role: arn:aws:iam::788578785318:role/service-role/HW2-LF2-role-8vyfqqu1
+  LambdaFunctionOne:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: lambdaOne.lambda_handler
+      Runtime: python3.8
+      FunctionName: HW2-LF1-Cloud
       CodeUri: ./src #Directory the source file is
       Role: arn:aws:iam::788578785318:role/service-role/HW2-LF2-role-8vyfqqu1
