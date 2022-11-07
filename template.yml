@@ -22,7 +22,7 @@ Resources:
           Properties:
             Path: /search
             Method: GET
-            ApiId: !ImportValue RestApiId
+            RestApiId: !ImportValue RestApiId
       # Events:
       #   ApiEvent:
       #     Type: Api
