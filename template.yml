@@ -18,7 +18,7 @@ Resources:
           opensearchurl: !ImportValue OpensearchEndPoint
       Events:
         ApiEvent:
-          Type: RestApi
+          Type: Api
           Properties:
             Path: /search
             Method: GET
