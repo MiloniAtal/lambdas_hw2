@@ -1,9 +1,9 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: Python file including external library changed again
-Parameters:
-  RestApi:
-    Type: String
+# Parameters:
+#   RestApi:
+#     Type: String
 Resources:
   LambdaFunctionTwo:
     Type: AWS::Serverless::Function
@@ -20,9 +20,9 @@ Resources:
         GetEndpoint:
           Type: RestApi
           Properties:
-            Path: /https://iav31pdv15.execute-api.us-east-1.amazonaws.com/beta
+            Path: /search
             Method: GET
-            ApiId: !Ref RestApi
+            ApiId: !ImportValue RestApiId
       # Events:
       #   ApiEvent:
       #     Type: Api
