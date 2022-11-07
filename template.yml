@@ -16,19 +16,6 @@ Resources:
       Environment:
         Variables:
           opensearchurl: !ImportValue OpensearchEndPoint
-      Events:
-        ApiEvent:
-          Type: Api
-          Properties:
-            Path: /search
-            Method: GET
-            RestApiId: !ImportValue RestApiId
-      # Events:
-      #   ApiEvent:
-      #     Type: Api
-      #     Properties:
-      #       Path: https://iav31pdv15.execute-api.us-east-1.amazonaws.com/beta/search
-      #       Method: get
   LambdaFunctionOne:
     Type: AWS::Serverless::Function
     Properties:
