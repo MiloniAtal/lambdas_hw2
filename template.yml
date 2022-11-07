@@ -3,7 +3,7 @@ Transform: AWS::Serverless-2016-10-31
 Description: Python file including external library changed again
 Parameters:
   RestApi:
-    Type: https://iav31pdv15.execute-api.us-east-1.amazonaws.com/beta
+    Type: String
 Resources:
   LambdaFunctionTwo:
     Type: AWS::Serverless::Function
@@ -20,7 +20,7 @@ Resources:
         GetEndpoint:
           Type: RestApi
           Properties:
-            Path: /search
+            Path: /https://iav31pdv15.execute-api.us-east-1.amazonaws.com/beta
             Method: GET
             ApiId: !Ref RestApi
       # Events:
