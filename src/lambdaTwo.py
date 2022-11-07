@@ -3,6 +3,8 @@ import boto3
 import requests
 from requests_aws4auth import AWS4Auth
 import logging
+import os
+
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
@@ -17,7 +19,7 @@ def connecting_to_opensearch():
     logger.debug('{}'.format(credentials.secret_key))
     logger.debug('{}'.format(credentials.token))
     
-    host = 'https://search-photos-fnoyjk7ev3wwyqeuzmmmzt5tje.us-east-1.es.amazonaws.com'
+    host = 'https://' + os.environ['opensearchurl']
     index = 'photos'
     url = host + '/' + index + '/_search'
     return host, index, url, awsauth

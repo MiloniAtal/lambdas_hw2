@@ -5,6 +5,8 @@ import datetime
 from requests_aws4auth import AWS4Auth
 from botocore.exceptions import ClientError
 import logging
+import os
+
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
@@ -15,7 +17,7 @@ awsauth = AWS4Auth(credentials.access_key, credentials.secret_key, region, servi
 
 # AWS Clients
 rekognition = boto3.client('rekognition')
-host = 'https://search-photos-fnoyjk7ev3wwyqeuzmmmzt5tje.us-east-1.es.amazonaws.com'
+host = 'https://' + os.environ['opensearchurl']
 index = 'photos'
 url = host + '/' + index + '/_doc'
 headers = { "Content-Type": "application/json" }
@@ -46,10 +48,18 @@ def index_photo( record ):
 
     r = requests.post(url, auth=awsauth, json = jsonObj, headers=headers)
     logger.debug(r.text)
-    
-    
-def lambda_handler(event, context):
 
+def create_index():    
+    headers = { "Content-Type": "application/json" }
+    r = requests.get(host + '/_cat/indices/', auth=awsauth, headers=headers)
+    if(index not in r.text):
+        create = requests.put(host + '/' + index, auth=awsauth, json={}, headers=headers)
+        logger.debug(create.text)
+    r = requests.get(host + '/_cat/indices/', auth=awsauth, headers=headers)
+    logger.debug(r.text)
+
+def lambda_handler(event, context):
+    create_index()
     print(event['Records'])
     for record in  event['Records']:
          index_photo(record)
