@@ -10,6 +10,9 @@ Resources:
       FunctionName: HW2-LF2-Cloud
       CodeUri: ./src #Directory the source file is
       Role: !ImportValue RoleArn
+      Environment:
+        Variables:
+          opensearchurl: !ImportValue OpensearchEndPoint
       # Events:
       #   ApiEvent:
       #     Type: Api
@@ -24,4 +27,7 @@ Resources:
       FunctionName: HW2-LF1-Cloud
       CodeUri: ./src #Directory the source file is
       Role: !ImportValue RoleArn
+      Environment:
+          Variables:
+            opensearchurl: !ImportValue OpensearchEndPoint
           
