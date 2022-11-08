@@ -1,9 +1,6 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: Python file including external library changed again
-# Parameters:
-#   RestApi:
-#     Type: String
 Resources:
   LambdaFunctionTwo:
     Type: AWS::Serverless::Function
@@ -12,7 +9,7 @@ Resources:
       Runtime: python3.8
       FunctionName: HW2-LF2-Cloud
       CodeUri: ./src #Directory the source file is
-      Role: !ImportValue RoleArn
+      Role: !ImportValue PhotoRoleArn
       Environment:
         Variables:
           opensearchurl: !ImportValue OpensearchEndPoint
@@ -23,7 +20,7 @@ Resources:
       Runtime: python3.8
       FunctionName: HW2-LF1-Cloud
       CodeUri: ./src #Directory the source file is
-      Role: !ImportValue RoleArn
+      Role: !ImportValue PhotoRoleArn
       Environment:
           Variables:
             opensearchurl: !ImportValue OpensearchEndPoint
