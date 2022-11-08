@@ -48,7 +48,7 @@ def index_photo( record ):
 
     r = requests.post(url, auth=awsauth, json = jsonObj, headers=headers)
     logger.debug(r.text)
-
+    
 def create_index():    
     headers = { "Content-Type": "application/json" }
     r = requests.get(host + '/_cat/indices/', auth=awsauth, headers=headers)
@@ -57,14 +57,14 @@ def create_index():
         logger.debug(create.text)
     r = requests.get(host + '/_cat/indices/', auth=awsauth, headers=headers)
     logger.debug(r.text)
-
+    
 def lambda_handler(event, context):
     create_index()
     print(event['Records'])
     for record in  event['Records']:
          index_photo(record)
     
-    # index_photo(None)
+    #index_photo(None)
     '''
     example
     [{'eventVersion': '2.1', 'eventSource': 'aws:s3', 'awsRegion': 'us-east-1', 'eventTime': '2022-11-03T02:47:00.235Z', 
