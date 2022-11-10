@@ -3,8 +3,8 @@ import boto3
 import requests
 from requests_aws4auth import AWS4Auth
 import logging
+import re
 import os
-
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
@@ -60,11 +60,19 @@ def search_intent(intent_request):
         query = None
     '''
     
+    #Using a temporary regex based stemmer
+    #q1 = re.sub(r'less|ship|ing|les|ly|es|s', '', q1)
+    #q2 = re.sub(r'less|ship|ing|les|ly|es|s', '', q2)
+    
+    
     query = []
     if len(q1):
         query.append(q1)
+        query.append(re.sub(r's', '', q1))
     if len(q2):
         query.append(q2)
+        #Below is not needed as per teh rubric. But just added.
+        query.append(re.sub(r's', '', q2))
 
     logger.debug(query)
     matching = []
@@ -145,6 +153,7 @@ def all():
     print(es_response_)
     print(es_response_.text)
     return es_response_
+    
 # def old_lambda_handler(event, context):
 #     # tester()
 #     # opensearch("Person")

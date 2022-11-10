@@ -1,11 +1,17 @@
 import json 
 import boto3
+import numpy as np
 import requests
 import datetime
 from requests_aws4auth import AWS4Auth
 from botocore.exceptions import ClientError
 import logging
+import re
 import os
+#from en import singular
+#from pattern.text.en import singularize
+#from nltk.stem import PorterStemmer
+#Running into compatibility issues while adding nltk layer to AWS lambda, hecne using a low level regex based stemmer
 
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
@@ -15,7 +21,10 @@ service = 'es'
 credentials = boto3.Session().get_credentials()
 awsauth = AWS4Auth(credentials.access_key, credentials.secret_key, region, service,session_token=credentials.token)
 
+#ps = nltk.stem.PorterStemmer()
+
 # AWS Clients
+s3 = boto3.client('s3')
 rekognition = boto3.client('rekognition')
 host = 'https://' + os.environ['opensearchurl']
 index = 'photos'
@@ -26,24 +35,49 @@ def get_labels(bucket, photo):
     all_labels = rekognition.detect_labels(Image={'S3Object':{'Bucket':bucket,'Name':photo}})
     labels = []
     for lab in all_labels['Labels']:
-        labels.append(lab['Name'])
+        labels.append(lab['Name'].lower())
     return labels
 
 def index_photo( record ):
     bucket_name = record['s3']['bucket']['name']
     photo_name = record['s3']['object']['key']
-    
+    head_response = s3.head_object(Bucket=bucket_name, Key=photo_name)
+    print('Head response')
+    print(head_response)
+    print(head_response.keys())
+    if 'customlabels' in head_response['Metadata']:
+        customs = head_response['Metadata']['customlabels'].lower().split(',')
+    else:
+        customs = []
     # bucket_name = "b2-hw2-my2727-ma4338"
     # photo_name = "random2.jpg"
    
     labels = get_labels(bucket_name, photo_name)
+    labels.extend(customs)
+    labels = list(set(labels))
+    
+    # TESTING STEMMING of labels
+    # To cater to plural
+    # print(labels)
+    # labels = [ ps.stem(word) for word in labels]
+    # labels = list(set(labels))
+    # print(labels)
+    
+    
+    # TESTING STEMMING of labels using regex
+    #print(labels)
+    #labels = [ re.sub(r'less|ship|ing|les|ly|es|s', '', word)  for word in labels]
+    #labels = list(set(labels))
+    #print(labels)
+    
     jsonObj = {
                 'objectKey': photo_name,
                 'bucket': bucket_name,
                 'createdTimestamp': datetime.datetime.now().strftime('%Y-%d-%mT%H:%M:%S'),
                 'labels': labels
               }
-    #print(jsonObj)
+    print('JSON object to search index')
+    print(jsonObj)
     #To insert into opensearch
 
     r = requests.post(url, auth=awsauth, json = jsonObj, headers=headers)
@@ -57,7 +91,7 @@ def create_index():
         logger.debug(create.text)
     r = requests.get(host + '/_cat/indices/', auth=awsauth, headers=headers)
     logger.debug(r.text)
-    
+
 def lambda_handler(event, context):
     create_index()
     print(event['Records'])
