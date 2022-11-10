@@ -99,7 +99,7 @@ def dispatch(intent_request):
     if intent_name == 'SearchIntent':
         return search_intent(intent_request)
 
-    return []
+    return [], []
 
 def opensearch_updated(value):
     query = {
