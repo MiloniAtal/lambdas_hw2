@@ -1,6 +1,5 @@
 import json 
 import boto3
-import numpy as np
 import requests
 import datetime
 from requests_aws4auth import AWS4Auth
