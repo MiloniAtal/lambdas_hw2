@@ -91,6 +91,19 @@ def create_index():
     r = requests.get(host + '/_cat/indices/', auth=awsauth, headers=headers)
     logger.debug(r.text)
 
+def delete_documents_index():
+    query = {
+      "query": {
+        "match_all": {}
+      }
+    }
+    headers = { "Content-Type": "application/json" }
+    logger.debug("here IMP")
+    r = requests.post(host + '/' + index + '/_delete_by_query', auth=awsauth, headers=headers, data=json.dumps(query))
+    logger.debug(r.text)
+    r = requests.get(host + '/' + index + '/_search', auth=awsauth, headers=headers, data=json.dumps(query))
+    logger.debug(r.text)
+
 def lambda_handler(event, context):
     create_index()
     print(event['Records'])
