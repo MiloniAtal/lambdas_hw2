@@ -197,7 +197,7 @@ def lambda_handler(event, context):
     #print(sessionId)
     #print(event)
     #print(context)
-    print(f"Message from frontend: {msg_from_user}")
+    print(f"Message from frontend new: {msg_from_user}")
     
     #msg_from_user = "Show me dogs or person"
     sessionId = "testuser"
